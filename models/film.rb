@@ -50,15 +50,44 @@ class Film
 
   def find_customers()
     sql = "SELECT customers.*
-    FROM customers
-    INNER JOIN tickets
-    ON tickets.customer_id = customers.id
-    INNER JOIN screenings
-    ON screenings.id = tickets.screening_id
-    WHERE screenings.film_id = $1"
+          FROM customers
+          INNER JOIN tickets
+          ON tickets.customer_id = customers.id
+          INNER JOIN screenings
+          ON screenings.id = tickets.screening_id
+          WHERE screenings.film_id = $1"
     values = [@id]
     customers = SqlRunner.run(sql, values)
     return customers.map{|customer| Customer.new(customer)}
+  end
+
+  def customer_count()
+    sql = "SELECT count(customer_id)
+          FROM tickets
+          INNER JOIN screenings
+          ON screenings.id = tickets.screening_id
+          INNER JOIN films
+          ON films.id = screenings.film_id
+          WHERE films.id = $1"
+    values = [id]
+    customer_count = SqlRunner.run(sql, values)[0]["count"].to_i
+    return customer_count
+  end
+
+  def find_most_popular_time()
+    # if (Ticket.check_if_tickets_are_sold(self))
+      sql = "SELECT screenings.film_id, screenings.start_time, count(screenings.start_time)
+            FROM screenings
+            INNER JOIN tickets
+            ON tickets.screening_id = screenings.id
+            GROUP BY screenings.film_id, screenings.start_time
+            HAVING screenings.film_id = $1
+            ORDER BY  screenings.film_id, count(screenings.start_time) DESC
+            LIMIT 1;"
+      values = [id]
+      most_popular_time = SqlRunner.run(sql, values)[0]["start_time"]
+      return most_popular_time
+    # end
   end
 
   def self.all()
