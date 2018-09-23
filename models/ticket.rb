@@ -113,9 +113,4 @@ class Ticket
     end
   end
 
-  # def check_if_tickets_are_sold(film)
-  #   tickets = all()
-  #
-  # end
-
 end

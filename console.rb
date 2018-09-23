@@ -37,10 +37,6 @@ film2.save()
 film3 = Film.new({"title" => "Jurassic World: Fallen Kingdom", "price" => 10 })
 film3.save()
 
-# film4 = Film.new({"title" => "Incredibles", "price" => 10 })
-# film4.save()
-# film5 = Film.new({"title" => "Mission Impossible - Fallout", "price" => 10 })
-# film5.save()
 
 screening1 = Screening.new({"name" => "Screen 1", "seats_available" => 10, "film_id" => film1.id, "start_time" => '2018-09-21 15:00:00'})
 screening1.save()
@@ -60,7 +56,7 @@ screening5.save()
 screening6 = Screening.new({"name" => "Screen 3", "seats_available" => 2, "film_id" => film3.id, "start_time" => '2018-09-21 22:30:00'})
 screening6.save()
 
-#######REPALCE THESE INSTANCES WITH TICKET SELL METHOD
+###### REPALCED THESE INSTANCES WITH TICKET SELL METHOD ######
 # ticket1 = Ticket.new({"customer_id" => customer1.id, "screening_id" => screening1.id, "cost" => 10})
 # ticket1.save()
 #
@@ -103,10 +99,10 @@ tickets = Ticket.all()
 # customer2.update()
 
 #Show which films a customer has booked to see
-# customer1.find_films()
+customer1.find_films()
 
 #see which customers are coming to see one film
-# film1.find_customers()
+film1.find_customers()
 
 # check if the customer has enough funds
 Ticket.customer_has_enough_funds(customer1, screening2)  # true
